@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+{% block content %}
+<style>
+    .login-container {
+        background: #fff;
+        border-radius: 14px;
+        padding: 40px 50px;
+        box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+        max-width: 500px;
+        margin: 40px auto;
+        text-align: center;
+    }
+
+    h2 {
+        color: #b31217;
+        margin-bottom: 25px;
+        font-size: 24px;
+    }
+
+    form {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        text-align: left;
+    }
+
+    label {
+        color: #444;
+        font-weight: 600;
+    }
+
+    input[type="text"],
+    input[type="password"] {
+        width: 100%;
+        padding: 10px 12px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        font-size: 14px;
+        transition: border-color 0.3s ease;
+    }
+
+    input[type="text"]:focus,
+    input[type="password"]:focus {
+        border-color: #b31217;
+        outline: none;
+    }
+
+    button {
+        background-color: #b31217;
+        color: #fff;
+        border: none;
+        padding: 12px;
+        border-radius: 8px;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background 0.3s ease;
+        margin-top: 10px;
+    }
+
+    button:hover {
+        background-color: #e52d27;
+        transform: scale(1.03);
+    }
+
+    .extra-links {
+        margin-top: 20px;
+        font-size: 14px;
+    }
+
+    .extra-links a {
+        color: #b31217;
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+    .extra-links a:hover {
+        text-decoration: underline;
+    }
+
+</style>
+
+<div class="login-container">
+    <h2>Student Login</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Login</button>
+    </form>
+
+    <div class="extra-links">
+        <p>Don’t have an account? <a href="/register/">Register</a></p>
+        <p><a href="/accounts/password_reset/">Forgot password?</a></p>
+    </div>
+</div>
+{% endblock %}

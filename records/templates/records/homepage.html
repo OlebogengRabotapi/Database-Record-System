@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+{% block content %}
+<style>
+    h2 {
+        color: #b31217;
+        text-align: center;
+        margin-bottom: 10px;
+    }
+
+    p {
+        text-align: center;
+        color: #444;
+        margin-bottom: 30px;
+        font-size: 16px;
+    }
+
+    .student-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 20px;
+    }
+
+    .student-card {
+        background-color: #fff;
+        border-radius: 12px;
+        padding: 20px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        border-top: 5px solid #b31217;
+    }
+
+    .student-card:hover {
+        transform: scale(1.03);
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+    }
+
+    .student-name {
+        font-weight: bold;
+        color: #b31217;
+        margin-bottom: 8px;
+        font-size: 16px;
+    }
+
+    .student-number {
+        color: #555;
+        font-size: 14px;
+        margin-bottom: 15px;
+    }
+
+    .record-links a {
+        display: inline-block;
+        margin: 5px;
+        padding: 8px 12px;
+        background-color: #b31217;
+        color: #fff;
+        text-decoration: none;
+        border-radius: 6px;
+        font-size: 13px;
+        transition: all 0.3s ease;
+    }
+
+    .record-links a:hover {
+        background-color: #e52d27;
+        transform: scale(1.05);
+    }
+
+    .no-students {
+        text-align: center;
+        color: #888;
+        font-style: italic;
+        margin-top: 30px;
+    }
+</style>
+
+
+<h2>Student Record System</h2>
+<p>Below is a list of registered students.</p>
+
+<form method="get" style="text-align:center; margin-bottom: 30px;">
+    <input type="text" name="q" placeholder="Search by name or student number" value="{{ request.GET.q|default:'' }}" style="padding:8px; width:260px; border-radius:6px; border:1px solid #ccc;">
+    <button type="submit" style="padding:8px 16px; background:#b31217; color:#fff; border:none; border-radius:6px;">Search</button>
+</form>
+
+{% if students %}
+<div class="student-list">
+    {% for student in students %}
+    <div class="student-card">
+        <div class="student-name">{{ student.first_name }} {{ student.last_name }}</div>
+        <div class="student-number">Student Number: {{ student.student_number }}</div>
+        <div class="record-links">
+            <a href="{% url 'full_transcript' student.id %}">Transcript</a>
+            <a href="{% url 'academic_record' student.id 2025 %}">2025 Record</a>
+            <a href="{% url 'semester_result_slip' student.id 2025 1 %}">2025 Sem 1</a>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<p class="no-students">No students found.</p>
+{% endif %}
+{% endblock %}
+

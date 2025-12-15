@@ -1,0 +1,116 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sol Plaatje University | Student Record System</title>
+    <style>
+        body {
+            font-family: "Segoe UI", Arial, sans-serif;
+            background: linear-gradient(to bottom right, #b31217, #e52d27);
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #b31217;
+            color: #fff;
+            padding: 15px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        header img {
+            width: 45px;
+            height: 45px;
+            border-radius: 6px;
+        }
+
+        header h1 {
+            font-size: 20px;
+            margin: 0;
+            letter-spacing: 0.5px;
+        }
+
+        .auth-links {
+            font-size: 14px;
+        }
+
+        .auth-links a {
+            color: #ffb400;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .auth-links a:hover {
+            text-decoration: underline;
+        }
+
+        main {
+            background-color: #fff;
+            margin: 40px auto;
+            padding: 30px 50px;
+            border-radius: 14px;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.2);
+            max-width: 900px;
+        }
+
+        footer {
+            text-align: center;
+            color: #eee;
+            font-size: 13px;
+            margin-top: 40px;
+            padding-bottom: 15px;
+        }
+
+        @media (max-width: 600px) {
+            header {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            main {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    {% if not pdf %}
+    <header>
+        <div class="logo-section">
+            <h1>Sol Plaatje University<br><span style="font-weight: normal;">Student Record System</span></h1>
+        </div>
+        <div class="auth-links">
+            {% if user.is_authenticated %}
+                Signed in as <strong>{{ user.get_full_name|default:user.username }}</strong> |
+                <form action="/accounts/logout/" method="post" style="display:inline;">
+                    {% csrf_token %}
+                    <button type="submit" style="background:none; border:none; color:#ffb400; font-weight:bold; cursor:pointer; padding:0;">Sign out</button>
+                </form>
+            {% else %}
+                <a href="/accounts/login/">Sign in</a>
+            {% endif %}
+        </div>
+    </header>
+    {% endif %}
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer>
+        2025 Sol Plaatje University
+    </footer>
+</body>
+</html>
+
+

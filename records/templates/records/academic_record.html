@@ -1,0 +1,112 @@
+{% extends 'base.html' %}
+{% block content %}
+<style>
+    .container {
+        background: #fff;
+        border-radius: 14px;
+        padding: 30px 40px;
+        box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+    }
+
+    h2 {
+        color: #b31217;
+        text-align: center;
+        margin-bottom: 10px;
+    }
+
+    p {
+        color: #444;
+        text-align: center;
+        font-size: 16px;
+        margin-bottom: 20px;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 10px;
+    }
+
+    th {
+        background-color: #b31217;
+        color: #fff;
+        padding: 12px;
+        text-align: left;
+        font-size: 14px;
+    }
+
+    td {
+        padding: 10px;
+        border-bottom: 1px solid #ddd;
+        font-size: 14px;
+    }
+
+    tr:nth-child(even) {
+        background-color: #f8f8f8;
+    }
+
+    tr:hover {
+        background-color: #ffe5e5;
+    }
+
+    .no-results {
+        text-align: center;
+        padding: 20px;
+        font-style: italic;
+        color: #888;
+    }
+
+    @media (max-width: 700px) {
+        table, thead, tbody, th, td, tr {
+            display: block;
+        }
+        th {
+            display: none;
+        }
+        td {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+        td::before {
+            content: attr(data-label);
+            font-weight: bold;
+            color: #b31217;
+        }
+    }
+</style>
+
+<div class="container">
+    <h2>Academic Record</h2>
+    <p><strong>Student:</strong> {{ student.first_name }} {{ student.last_name }} ({{ student.student_number }})</p>
+    <p><strong>Year:</strong> {{ year }}</p>
+
+    {% if results %}
+    <table>
+        <thead>
+            <tr>
+                <th>Semester</th>
+                <th>Module Code</th>
+                <th>Module Name</th>
+                <th>Credit Hours</th>
+                <th>Mark</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for result in results %}
+            <tr>
+                <td data-label="Semester">{{ result.semester }}</td>
+                <td data-label="Module Code">{{ result.module.code }}</td>
+                <td data-label="Module Name">{{ result.module.name }}</td>
+                <td data-label="Credit Hours">{{ result.module.credit_hours }}</td>
+                <td data-label="Mark">{{ result.mark|default:"N/A" }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+        <p class="no-results">No results available for this academic year.</p>
+    {% endif %}
+</div>
+{% endblock %}

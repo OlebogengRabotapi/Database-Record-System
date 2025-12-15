@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="login-container" style="max-width:400px;margin:40px auto;background:#fff;padding:30px 40px;border-radius:12px;box-shadow:0 4px 16px rgba(0,0,0,0.10);">
+    <h2 style="color:#b31217;text-align:center;">Lecturer Login</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" style="background:#b31217;color:#fff;padding:10px 0;width:100%;border:none;border-radius:8px;font-weight:bold;font-size:16px;">Login</button>
+    </form>
+    <div style="margin-top:18px;text-align:center;">
+        <a href="/accounts/password_reset/" style="color:#b31217;font-size:13px;">Forgot password?</a>
+    </div>
+</div>
+{% endblock %}
